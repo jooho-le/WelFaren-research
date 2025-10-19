@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>웰파렌 | 복지×금융 핀테크 플랫폼</title>
+    <meta name="description" content="복지 혜택을 자동으로 알려주고, 높은 이자율의 저축 상품을 추천하는 핀테크 플랫폼 웰파렌의 사전 선호도 조사." />
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <header class="container">
+      <h1>복지×금융 핀테크 플랫폼 ‘<span class="brand">웰파렌</span>’</h1>
+      <p class="tagline">곁에서 돕는 금융·복지 AI 어시스턴트</p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>서비스 한눈에 보기</h2>
+        <ul class="features">
+          <li>복지 혜택을 자동으로 알려주는 AI 보조 서비스</li>
+          <li>이자율이 높은 저축 상품을 자동으로 추천해주는 서비스</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>사전 선호도 및 얼리 액세스</h2>
+        <p class="lead">다운로드 링크를 원하시면 이메일을 남겨주세요.</p>
+        <form id="subscribe-form" class="subscribe">
+          <label for="email" class="visually-hidden">이메일</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          <button type="submit">알림 받기</button>
+        </form>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+        <small class="disclaimer">이메일은 출시 알림과 초기 초대에만 사용됩니다.</small>
+      </section>
+    </main>
+
+    <footer class="container footer">
+      <small>© <span id="year"></span> 웰파렌</small>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+  </body>
+  </html>
+
