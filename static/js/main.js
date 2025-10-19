@@ -33,3 +33,57 @@ form?.addEventListener('submit', async (e) => {
   }
 });
 
+const sliderEl = document.querySelector('.slider');
+if (sliderEl) {
+  const slides = Array.from(sliderEl.querySelectorAll('.slide'));
+  const dotsHost = sliderEl.querySelector('.slider-dots');
+  if (slides.length > 0 && dotsHost) {
+    let activeIndex = slides.findIndex((slide) => slide.classList.contains('is-active'));
+    if (activeIndex < 0) activeIndex = 0;
+    const dots = slides.map((_, idx) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `${idx + 1}번 슬라이드 보기`);
+      dot.addEventListener('click', () => goToSlide(idx));
+      dotsHost.appendChild(dot);
+      return dot;
+    });
+
+    let timerId = null;
+    const autoplayDelay = Number(sliderEl.dataset.autoplay) || 6000;
+
+    function setActive(index) {
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('is-active', idx === index);
+      });
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('is-active', idx === index);
+      });
+      sliderEl.setAttribute('data-active-index', index);
+    }
+
+    function goToSlide(index) {
+      activeIndex = (index + slides.length) % slides.length;
+      setActive(activeIndex);
+      restartAutoplay();
+    }
+
+    function nextSlide() {
+      goToSlide(activeIndex + 1);
+    }
+
+    function restartAutoplay() {
+      if (!autoplayDelay) return;
+      clearInterval(timerId);
+      timerId = setInterval(nextSlide, autoplayDelay);
+    }
+
+    sliderEl.addEventListener('pointerenter', () => clearInterval(timerId));
+    sliderEl.addEventListener('pointerleave', restartAutoplay);
+    sliderEl.addEventListener('focusin', () => clearInterval(timerId));
+    sliderEl.addEventListener('focusout', restartAutoplay);
+
+    setActive(activeIndex);
+    restartAutoplay();
+  }
+}
