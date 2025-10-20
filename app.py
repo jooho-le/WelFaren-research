@@ -17,6 +17,8 @@ def create_app():
         SECRET_KEY=os.environ.get("SECRET_KEY", "change-me"),
         ADMIN_TOKEN=os.environ.get("ADMIN_TOKEN", ""),
         DB_PATH=str(DB_PATH),
+        # Display starts at 532 even when DB count is 0
+        COUNT_OFFSET=532,
     )
 
     @app.before_request
@@ -31,7 +33,18 @@ def create_app():
 
     @app.route("/")
     def index():
-        return render_template("index.html")
+        # Count current subscribers to display on the homepage footer
+        try:
+            row = g.db.execute("SELECT COUNT(*) FROM subscribers").fetchone()
+            subscriber_count = int(row[0]) if row else 0
+        except sqlite3.Error:
+            subscriber_count = 0
+        display_count = subscriber_count + int(app.config.get("COUNT_OFFSET", 0))
+        return render_template(
+            "index.html",
+            subscriber_count=subscriber_count,
+            display_count=display_count,
+        )
 
     @app.post("/subscribe")
     def subscribe():
@@ -137,4 +150,3 @@ app = create_app()
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port, debug=True)
-
