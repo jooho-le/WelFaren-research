@@ -27,13 +27,21 @@
         <section class="card">
           <h2>사전 선호도 및 얼리 액세스</h2>
           <p class="lead">다운로드 링크를 원하시면 이메일을 남겨주세요.</p>
-          <form id="subscribe-form" class="subscribe">
+          <form id="subscribe-form" class="subscribe" data-subscribe-form>
             <label for="email" class="visually-hidden">이메일</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" required />
             <button type="submit">알림 받기</button>
           </form>
-          <p id="status" class="status" role="status" aria-live="polite"></p>
+          <p id="status" class="status" role="status" aria-live="polite" data-status></p>
           <small class="disclaimer">이메일은 출시 알림과 초기 초대에만 사용됩니다.</small>
+        </section>
+
+        <!-- 큰 박스: 등록된 이메일 개수 표시 -->
+        <section class="card card-large count-card" aria-live="polite">
+          <h2>지금까지 등록된 이메일</h2>
+          <p class="lead">관심을 가져주신 분들의 수</p>
+          <p class="count-number"><span class="num" data-subscriber-count>{{ display_count }}</span>개</p>
+          <small class="disclaimer">참여해 주셔서 감사합니다.</small>
         </section>
       </div>
 
@@ -76,8 +84,13 @@
 
     <footer class="container footer">
       <small>© <span id="year"></span> 웰파렌</small>
+      <small style="margin-left: 1rem;">현재 등록된 이메일: <span data-subscriber-count>{{ display_count }}</span>개</small>
     </footer>
 
+    <!-- Supabase (optional; static deploy path) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Provide SUPABASE_URL and SUPABASE_ANON_KEY as window globals in /static/env.js -->
+    <script src="/static/env.js"></script>
     <script src="/static/js/main.js"></script>
   </body>
   </html>
